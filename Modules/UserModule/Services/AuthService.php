@@ -5,8 +5,6 @@ namespace Modules\UserModule\Services;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Modules\UserModule\Repositories\UserRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\Permission\Models\Role;
