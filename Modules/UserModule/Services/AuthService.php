@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Modules\UserModule\Repositories\UserRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
-
+use Spatie\Permission\Models\Role;
 
 class AuthService extends BaseService
 {
@@ -30,19 +30,25 @@ class AuthService extends BaseService
     {
         return $this->userRepository;
     }
+    public function get_role_if_from_name($role_name){
+        return Role::whereName($role_name)->first();
 
+    }
     public function createuser(array $data)
     {
         try {
-            Arr::only($data,['name','password','email']);
+            Arr::only($data,['name','password','email','role_name']);
             $data['password'] = bcrypt(Arr::get($data,'password'));
-            return $this->userRepository->create($data);
+            $role = $this->get_role_if_from_name(Arr::get($data,'role_name'));
+            $user = $this->userRepository->create($data);
+            $user->assignRole($role);
+            return $user;
         }
         catch(Exception $e){
            return $e->getMessage();
         }
     }
     public function getallusers(){
-       return $this->userRepository->all();
+       return $this->userRepository->with('roles')->all();
     }
 }

@@ -4,7 +4,7 @@ namespace Modules\UserModule\Http\Resources;
 
 
 
-class UserResource extends BaseResource
+class RoleResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,8 @@ class UserResource extends BaseResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "email" => $this->email,
-            "role" => RoleResource::collection($this->whenLoaded('roles')),
+            "email" => $this->guard_name,
+            "model_type" => $this->pivot->model_type,
         ];
     }
 }

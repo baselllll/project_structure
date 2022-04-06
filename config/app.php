@@ -175,7 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

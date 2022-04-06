@@ -16,7 +16,8 @@ class RegisterUserRequest extends BaseRequest
             "name"=>"required",
             "email"=>"required|unique:users",
             'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6'
+            'password_confirmation' => 'required|min:6',
+            'role_name' => 'required|exists:roles,name',
         ];
     }
 
