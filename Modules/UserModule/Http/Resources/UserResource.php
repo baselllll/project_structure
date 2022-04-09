@@ -18,7 +18,10 @@ class UserResource extends BaseResource
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at,
             "role" => RoleResource::collection($this->whenLoaded('roles')),
+            'profile_image_url' => optional(optional($this->getMedia('profile_image'))->first())->getFullUrl(),
         ];
     }
 }

@@ -40,7 +40,12 @@ class AuthService extends BaseService
             $role = $this->get_role_if_from_name(Arr::get($data,'role_name'));
             $user = $this->userRepository->create($data);
             $user->assignRole($role);
-            return $user;
+            if (!is_null($file = Arr::get($data, 'image'))) {
+                $user->addMedia($file)
+                ->preservingOriginal()
+                ->toMediaCollection('profile_image');
+            }
+           return $user;
         }
         catch(Exception $e){
            return $e->getMessage();

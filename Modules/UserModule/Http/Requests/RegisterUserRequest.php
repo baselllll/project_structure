@@ -18,6 +18,7 @@ class RegisterUserRequest extends BaseRequest
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6',
             'role_name' => 'required|exists:roles,name',
+            'image' => 'required',
         ];
     }
 
@@ -30,5 +31,5 @@ class RegisterUserRequest extends BaseRequest
     {
         return true;
     }
-    
+
 }
