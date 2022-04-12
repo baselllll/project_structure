@@ -13,7 +13,8 @@ class RegisterUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            "name"=>"required",
+            "ar_name"=>"required",
+            "en_name"=>"required",
             "email"=>"required|unique:users",
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6',

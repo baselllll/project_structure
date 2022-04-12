@@ -35,10 +35,17 @@ class AuthService extends BaseService
     public function createuser(array $data)
     {
         try {
-            Arr::only($data,['name','password','email','role_name']);
+            Arr::only($data,['ar_name','en_name','password','email','role_name']);
             $data['password'] = bcrypt(Arr::get($data,'password'));
             $role = $this->get_role_if_from_name(Arr::get($data,'role_name'));
-            $user = $this->userRepository->create($data);
+            $user = $this->userRepository->create([
+                'name' =>[
+                    'ar' =>  Arr::get($data, 'ar_name'),
+                    'en' =>  Arr::get($data, 'en_name')
+                ],
+                'email'=>$data['email'],
+                'password'=>$data['password']
+            ]);
             $user->assignRole($role);
             if (!is_null($file = Arr::get($data, 'image'))) {
                 $user->addMedia($file)

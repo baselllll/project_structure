@@ -11,11 +11,15 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Translatable\HasTranslations;
+
 class User extends Authenticatable implements JWTSubject,HasMedia
 {
     use HasFactory, Notifiable,HasRoles,HasMediaTrait;
     use SoftDeletes;
+    use HasTranslations;
 
+    public $translatable = ['name'];
     /**
      * The attributes that are mass assignable.
      *
