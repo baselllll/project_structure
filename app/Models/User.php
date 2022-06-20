@@ -17,16 +17,16 @@ class User extends Authenticatable implements JWTSubject,HasMedia
 {
     use HasFactory, Notifiable,HasRoles,HasMediaTrait;
     use SoftDeletes;
-    use HasTranslations;
+    // use HasTranslations;
 
-    public $translatable = ['name'];
+    // public $translatable = ['name'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','profile_type','location',
     ];
 
     /**
