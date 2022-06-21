@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vechiles extends Model
+class Vechiles extends Model implements HasMedia
 {
-    use HasFactory,SoftDeletes;
+    protected $fillable = ['model','type','number','color','YearOfReg','notes'];
+    use HasFactory,SoftDeletes,HasMediaTrait;
 }
