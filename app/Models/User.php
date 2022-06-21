@@ -81,4 +81,7 @@ class User extends Authenticatable implements JWTSubject,HasMedia
             $builder->orderByDesc('created_at');
         });
     }
+    public function offer_ride(){
+        return $this->hasOne(OfferRide::class,'user_id');
+    }
 }

@@ -20,5 +20,6 @@ Route::post('register-user',[UserLoginController::class,'registerUser']);
 Route::middleware('auth:api')->prefix('users')->group(function () {
     Route::prefix('driver')->group(function () {
        Route::apiResource('vechiles','VechileController');
+       Route::apiResource('offer-ride','OfferRideController');
     });
 });

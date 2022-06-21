@@ -5,17 +5,19 @@ namespace Modules\UserModule\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\UserModule\Http\Requests\DeleteVechileRequest;
-use Modules\UserModule\Http\Requests\UpdateCheckVechileRequest;
+use Modules\UserModule\Http\Requests\DeleteOfferRideRequest;
+use Modules\UserModule\Http\Requests\OfferRideRequest;
+use Modules\UserModule\Http\Requests\UpdateCheckOfferRideRequest;
 use Modules\UserModule\Http\Requests\VechileRequest;
+use Modules\UserModule\Http\Resources\OfferRideServiceResource;
 use Modules\UserModule\Http\Resources\VechileResource;
-use Modules\UserModule\Services\VechileService;
+use Modules\UserModule\Services\OfferRideService;
 
-class VechileController extends Controller
+class OfferRideController extends Controller
 {
-    private $VechileService;
-    public function __construct(VechileService $VechileService) {
-        $this->VechileService = $VechileService;
+    private $OfferRideService;
+    public function __construct(OfferRideService $OfferRideService) {
+        $this->OfferRideService = $OfferRideService;
     }
     /**
      * Display a listing of the resource.
@@ -23,8 +25,8 @@ class VechileController extends Controller
      */
     public function index(Request $request)
     {
-        $vechile = VechileResource::collection($this->VechileService->getallvechiles($request->page_size));
-        return response()->json($vechile,200);
+        $OfferRideService = OfferRideServiceResource::collection($this->OfferRideService->getallofferRide($request->page_size));
+        return response()->json($OfferRideService,200);
     }
 
     /**
@@ -40,9 +42,9 @@ class VechileController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(VechileRequest $request)
+    public function store(OfferRideRequest $request)
     {
-        $vechile = new VechileResource($this->VechileService->createVechile($request->validated()));
+        $vechile = new OfferRideServiceResource($this->OfferRideService->createofferRide($request->validated()));
         return response()->json($vechile,200);
     }
 
@@ -72,10 +74,10 @@ class VechileController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(UpdateCheckVechileRequest $request, $id)
+    public function update(UpdateCheckOfferRideRequest $request,OfferRideRequest $offerRequest, $id)
     {
-        $vechile = new VechileResource($this->VechileService->updateVechile($request->all(),$id));
-        return response()->json($vechile,200);
+        $offer_ride = new OfferRideServiceResource($this->OfferRideService->updateofferRide($offerRequest->validated(),$id));
+        return response()->json($offer_ride,200);
     }
 
     /**
@@ -83,9 +85,9 @@ class VechileController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy(DeleteVechileRequest $request,$id)
+    public function destroy(DeleteOfferRideRequest $request,$id)
     {
-        $vechile = $this->VechileService->deleteVechile($id);
-        return response()->json($vechile,200);
+        $offer_ride = $this->OfferRideService->deleteofferRide($id);
+        return response()->json($offer_ride,200);
     }
 }

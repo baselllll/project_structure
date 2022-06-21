@@ -3,33 +3,23 @@
 namespace Modules\UserModule\Http\Requests;
 
 
-class VechileRequest extends BaseRequest
+class UpdateCheckVechileRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-
     protected function prepareForValidation()
     {
-        $id = $this->route('vechile');
-        $this->merge(['id' =>  $id]);
+        $this->merge(['id' => $this->route('vechile')]);
     }
-
     public function rules()
     {
         return [
-            'model' => 'required',
-            'type' => 'required',
-            'number' => 'required',
-            'color' => 'required',
-            'YearOfReg' => 'required',
-            'notes' => 'required',
-            'image' => 'required'
+            'id' => 'required|exists:vechiles,id',
         ];
     }
-
     /**
      * Determine if the user is authorized to make this request.
      *
