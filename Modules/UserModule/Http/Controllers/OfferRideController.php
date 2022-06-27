@@ -5,7 +5,7 @@ namespace Modules\UserModule\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\UserModule\Http\Requests\DeleteOfferRideRequest;
+use Modules\UserModule\Http\Requests\ResetPasswordRequest;
 use Modules\UserModule\Http\Requests\OfferRideRequest;
 use Modules\UserModule\Http\Requests\UpdateCheckOfferRideRequest;
 use Modules\UserModule\Http\Requests\VechileRequest;
@@ -85,7 +85,7 @@ class OfferRideController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy(DeleteOfferRideRequest $request,$id)
+    public function destroy(ResetPasswordRequest $request, $id)
     {
         $offer_ride = $this->OfferRideService->deleteofferRide($id);
         return response()->json($offer_ride,200);

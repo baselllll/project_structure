@@ -3,6 +3,7 @@
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Modules\UserModule\Http\Controllers\UserLoginController;
+use Modules\UserModule\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use Modules\UserModule\Http\Controllers\UserLoginController;
 
 Route::post('login-user',[UserLoginController::class,'loginUser']);
 Route::post('register-user',[UserLoginController::class,'registerUser']);
+Route::post('password/reset', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
 Route::middleware('auth:api')->prefix('users')->group(function () {
     Route::prefix('driver')->group(function () {
        Route::apiResource('vechiles','VechileController');

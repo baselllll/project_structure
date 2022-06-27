@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Modules\UserModule\Repositories\UserRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\Permission\Models\Role;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService extends BaseService
 {
@@ -64,5 +65,19 @@ class AuthService extends BaseService
     }
     public function getallusers(){
        return $this->userRepository->with('roles')->all();
+    }
+
+    public function resetPassword(string $phone_number, string $new_password)
+    {
+        $user = $this->userRepository->where('phone_number',$phone_number);
+        $user_updated = $user->update(['password' => bcrypt($new_password)]);
+        $user = $this->userRepository->find($user->first()->id);
+        $credentials = ['email'=>$user->email,"password"=>$new_password];
+         $token = JWTAuth::attempt($credentials);
+        $user->token = $token;
+        if (is_null($user)) {
+            abort(404, "The User was not found");
+        }
+        return $user;
     }
 }
