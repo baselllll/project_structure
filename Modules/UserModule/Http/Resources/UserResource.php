@@ -21,6 +21,7 @@ class UserResource extends BaseResource
             "email" => $this->email,
             "profile_type" => $this->profile_type,
             "location" => $this->location,
+            "phone_number" => $this->phone_number,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             // "role" => RoleResource::collection($this->whenLoaded('roles')),

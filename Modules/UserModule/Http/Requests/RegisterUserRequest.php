@@ -23,6 +23,7 @@ class RegisterUserRequest extends BaseRequest
             'image' => 'required',
             'location'=>'required',
             'profile_type'=>'required|in:user,driver',
+            'phone_number'=>'required|string',
         ];
     }
 
