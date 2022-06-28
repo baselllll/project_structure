@@ -18,6 +18,12 @@ use Modules\UserModule\Http\Controllers\ResetPasswordController;
 
 Route::post('login-user',[UserLoginController::class,'loginUser']);
 Route::post('register-user',[UserLoginController::class,'registerUser']);
+Route::get('login/{provider}', [\Modules\UserModule\Http\Controllers\SocialLoginController::class, 'redirectToProvider'])
+    ->where('provider', '(google|facebook|apple)')
+    ->name('login.social.redirect');
+Route::get('login/{provider}/callback', [\Modules\UserModule\Http\Controllers\SocialLoginController::class, 'handleProviderCallback'])
+    ->where('provider', '(google|facebook|apple)')
+    ->name('login.social.callback');
 Route::post('password/reset', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
 Route::middleware('auth:api')->prefix('users')->group(function () {
     Route::prefix('driver')->group(function () {

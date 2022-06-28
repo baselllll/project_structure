@@ -5,6 +5,7 @@ namespace Modules\UserModule\Services;
 
 use Exception;
 use Illuminate\Support\Arr;
+use Laravel\Socialite\Facades\Socialite;
 use Modules\UserModule\Repositories\UserRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Spatie\Permission\Models\Role;
@@ -80,5 +81,25 @@ class AuthService extends BaseService
             abort(404, "The User was not found");
         }
         return $user;
+    }
+    /**
+     * Login Using A Social Provider
+     * @param string $social_provider
+     * @param string $token
+     * @return \App\Models\User
+     * @throws UserNotFoundException
+     */
+    public function firstOrFailSocial(string $social_provider, string $token)
+    {
+        $social_user = Socialite::driver($social_provider)->stateless()->userFromToken($token);
+        $email = $social_user->getEmail() ?? sprintf("%s@%s.com", $social_user->getId(), $social_provider);
+        $user_by_social_mail = $this->userRepository->findBy('email', $email);
+
+        //the user has not registered by social before
+        if (is_null($user_by_social_mail)) {
+            abort(404,"Not Found");
+        }
+
+        return $user_by_social_mail;
     }
 }
