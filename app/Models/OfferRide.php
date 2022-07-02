@@ -14,7 +14,7 @@ class OfferRide extends Model implements HasMedia
     protected $fillable=
     [
         'user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed'
-        ,'needs_desciption','Accept_Offer',
+        ,'needs_desciption','Accept_Offer','date_offer_ride','time_offer_ride'
     ];
 
     public function user(){

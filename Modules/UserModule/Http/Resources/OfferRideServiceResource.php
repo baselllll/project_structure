@@ -25,7 +25,9 @@ class OfferRideServiceResource extends BaseResource
             "Max_Speed" => $this->Max_Speed,
             "occupied_Seat" => $this->occupied_Seat,
             "needs_desciption" => $this->needs_desciption,
-            "Accept_Offer" => $this->Accept_Offer
+            "Accept_Offer" => $this->Accept_Offer,
+            "date_offer_ride" => $this->date_offer_ride,
+            "time_offer_ride" => $this->time_offer_ride
         ];
     }
 }

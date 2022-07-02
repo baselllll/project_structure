@@ -17,15 +17,19 @@ class UserResource extends BaseResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            // "name" => $this->getTranslations('name'),
             "email" => $this->email,
             "profile_type" => $this->profile_type,
-            "location" => $this->location,
             "phone_number" => $this->phone_number,
+            "gender" => $this->gender,
+            "address" => $this->address,
+            "city" => $this->location,
+            "work_company" => $this->work_company,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
-            // "role" => RoleResource::collection($this->whenLoaded('roles')),
             'profile_image_url' => optional(optional($this->getMedia('profile_image'))->first())->getFullUrl(),
+            'Id_Front' => optional(optional($this->getMedia('Id_Front'))->first())->getFullUrl(),
+            'Id_Back' => optional(optional($this->getMedia('Id_Back'))->first())->getFullUrl(),
+            'company_offer_letter' => optional(optional($this->getMedia('company_offer_letter'))->first())->getFullUrl(),
         ];
     }
 }

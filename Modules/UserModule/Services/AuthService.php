@@ -37,27 +37,44 @@ class AuthService extends BaseService
     public function createuser(array $data)
     {
         try {
-            Arr::only($data,['name','password','email','role_name','location','profile_type','phone_number']);
+            Arr::only($data,
+                ['first_name','last_name','gender','Id_Front','company_offer_letter','work_company','Id_Back','password','email','role_name','location','profile_type','phone_number']
+            );
+
             // Arr::only($data,['ar_name','en_name','password','email','role_name']);
             $data['password'] = bcrypt(Arr::get($data,'password'));
             $role = $this->get_role_if_from_name(Arr::get($data,'role_name'));
             $user = $this->userRepository->create([
-                // 'name' =>[
-                //     'ar' =>  Arr::get($data, 'ar_name'),
-                //     'en' =>  Arr::get($data, 'en_name')
-                // ],
-                'name' =>Arr::get($data, 'name'),
+                'name' =>Arr::get($data, 'first_name').' '.Arr::get($data, 'last_name'),
                 'email'=>$data['email'],
                 'password'=>$data['password'],
                 'location'=>$data['location'],
                 'profile_type'=>$data['profile_type'],
                 'phone_number'=>$data['phone_number'],
+                'address'=>$data['address'],
+                'work_company'=>$data['work_company'],
+                'gender'=>$data['gender']
             ]);
             $user->assignRole($role);
             if (!is_null($file = Arr::get($data, 'image'))) {
                 $user->addMedia($file)
                 ->preservingOriginal()
                 ->toMediaCollection('profile_image');
+            }
+            if (!is_null($Id_Front = Arr::get($data, 'Id_Front'))) {
+                $user->addMedia($Id_Front)
+                    ->preservingOriginal()
+                    ->toMediaCollection('Id_Front');
+            }
+            if (!is_null($Id_Back = Arr::get($data, 'Id_Back'))) {
+                $user->addMedia($Id_Back)
+                    ->preservingOriginal()
+                    ->toMediaCollection('Id_Back');
+            }
+            if (!is_null($company_offer_letter = Arr::get($data, 'company_offer_letter'))) {
+                $user->addMedia($company_offer_letter)
+                    ->preservingOriginal()
+                    ->toMediaCollection('company_offer_letter');
             }
            return $user;
         }
@@ -82,13 +99,7 @@ class AuthService extends BaseService
         }
         return $user;
     }
-    /**
-     * Login Using A Social Provider
-     * @param string $social_provider
-     * @param string $token
-     * @return \App\Models\User
-     * @throws UserNotFoundException
-     */
+
     public function firstOrFailSocial(string $social_provider, string $token)
     {
         $social_user = Socialite::driver($social_provider)->stateless()->userFromToken($token);

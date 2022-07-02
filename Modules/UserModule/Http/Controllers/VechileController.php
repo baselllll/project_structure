@@ -43,7 +43,11 @@ class VechileController extends Controller
     public function store(VechileRequest $request)
     {
         $vechile = new VechileResource($this->VechileService->createVechile($request->validated()));
-        return response()->json($vechile,200);
+        return response()->json([
+            "message"=>"data stored successfully",
+            "status"=>"success",
+            "data"=>$vechile
+        ],200);
     }
 
     /**
@@ -75,7 +79,12 @@ class VechileController extends Controller
     public function update(UpdateCheckVechileRequest $request, $id)
     {
         $vechile = new VechileResource($this->VechileService->updateVechile($request->all(),$id));
-        return response()->json($vechile,200);
+
+        return response()->json([
+            "message"=>"data updated successfully",
+            "status"=>"success",
+            "data"=>$vechile
+        ],200);
     }
 
     /**
@@ -86,6 +95,10 @@ class VechileController extends Controller
     public function destroy(DeleteVechileRequest $request,$id)
     {
         $vechile = $this->VechileService->deleteVechile($id);
-        return response()->json($vechile,200);
+        return response()->json([
+            "message"=>"data deleted successfully",
+            "status"=>"success",
+            "data"=>$vechile
+        ],200);
     }
 }

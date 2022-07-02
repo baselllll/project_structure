@@ -28,6 +28,8 @@ class OfferRideRequest extends BaseRequest
             'Max_Speed' => 'required',
             'needs_desciption' => 'required',
             'Accept_Offer' => 'required',
+            'date_offer_ride' => 'sometimes|date',
+            'time_offer_rde' => 'sometimes|date_format:H:i',
         ];
     }
 

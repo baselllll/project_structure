@@ -46,8 +46,15 @@ class UserLoginController extends Controller
     }
      public function registerUser(RegisterUserRequest $request)
      {
+
          $user = new UserResource($this->userservice->createuser($request->validated()));
-         return response()->json($user,200);
+
+         return response()->json(
+             [
+                 "message"=>"data stored successfully",
+                 "status"=>"success",
+                 "data"=> $user
+             ],200);
     }
     public function GetAllUser(){
         $users = UserResource::collection($this->userservice->getallusers());

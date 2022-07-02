@@ -44,8 +44,13 @@ class OfferRideController extends Controller
      */
     public function store(OfferRideRequest $request)
     {
-        $vechile = new OfferRideServiceResource($this->OfferRideService->createofferRide($request->validated()));
-        return response()->json($vechile,200);
+        $OfferRideService = new OfferRideServiceResource($this->OfferRideService->createofferRide($request->all()));
+        return response()->json(
+            [
+                "message"=>"data stored successfully",
+                "status"=>"success",
+                "data"=>$OfferRideService
+            ],200);
     }
 
     /**
@@ -77,7 +82,11 @@ class OfferRideController extends Controller
     public function update(UpdateCheckOfferRideRequest $request,OfferRideRequest $offerRequest, $id)
     {
         $offer_ride = new OfferRideServiceResource($this->OfferRideService->updateofferRide($offerRequest->validated(),$id));
-        return response()->json($offer_ride,200);
+        return response()->json([
+                "message"=>"data updated successfully",
+                "status"=>"success",
+                "data"=>$offer_ride
+            ],200);
     }
 
     /**
@@ -88,6 +97,10 @@ class OfferRideController extends Controller
     public function destroy(ResetPasswordRequest $request, $id)
     {
         $offer_ride = $this->OfferRideService->deleteofferRide($id);
-        return response()->json($offer_ride,200);
+        return response()->json([
+            "message"=>"data deleted successfully",
+            "status"=>"success",
+            "data"=>$offer_ride
+        ],200);
     }
 }

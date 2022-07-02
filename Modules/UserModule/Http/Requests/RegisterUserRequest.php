@@ -13,17 +13,21 @@ class RegisterUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            // "ar_name"=>"required",
-            // "en_name"=>"required",
+            'first_name'=>'required',
+            'last_name'=>'required',
             "email"=>"required|unique:users",
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6',
-            // 'role_name' => 'required|exists:roles,name',
             'image' => 'required',
             'location'=>'required',
             'profile_type'=>'required|in:user,driver',
             'phone_number'=>'required|string',
+            'Id_Front'=>'required',
+            'Id_Back'=>'required',
+            'work_company'=>'required',
+            'company_offer_letter'=>'required',
+            'address'=>'required',
+            'gender'=>'required|in:male,female',
         ];
     }
 
