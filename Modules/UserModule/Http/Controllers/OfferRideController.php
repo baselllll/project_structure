@@ -81,7 +81,7 @@ class OfferRideController extends Controller
      */
     public function update(UpdateCheckOfferRideRequest $request,OfferRideRequest $offerRequest, $id)
     {
-        $offer_ride = new OfferRideServiceResource($this->OfferRideService->updateofferRide($offerRequest->validated(),$id));
+        $offer_ride = new OfferRideServiceResource($this->OfferRideService->updateofferRide($offerRequest->all(),$id));
         return response()->json([
                 "message"=>"data updated successfully",
                 "status"=>"success",
