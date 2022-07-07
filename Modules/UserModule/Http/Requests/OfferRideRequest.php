@@ -27,6 +27,8 @@ class OfferRideRequest extends BaseRequest
             'offering_seats' => 'required',
             'Max_Speed' => 'required',
             'needs_desciption' => 'required',
+            'In_Between_Date ' => 'string',
+            'occupied_Seat ' => 'string',
             'Accept_Offer' => 'required',
             'date_offer_ride' => 'sometimes|date',
             'time_offer_rde' => 'sometimes|date_format:H:i',

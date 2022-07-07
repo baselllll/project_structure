@@ -18,6 +18,8 @@ use Modules\UserModule\Http\Controllers\ResetPasswordController;
 
 Route::post('login-user',[UserLoginController::class,'loginUser']);
 Route::post('register-user',[UserLoginController::class,'registerUser']);
+Route::post('password/email', [\App\Http\Controllers\ForgotPasswordController::class,'forgot']);
+
 Route::get('login/{provider}', [\Modules\UserModule\Http\Controllers\SocialLoginController::class, 'redirectToProvider'])
     ->where('provider', '(google|facebook|apple)')
     ->name('login.social.redirect');

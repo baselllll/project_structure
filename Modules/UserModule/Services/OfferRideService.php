@@ -32,7 +32,7 @@ class OfferRideService extends BaseService
     public function createofferRide(array $data)
     {
 
-            Arr::only($data,['date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
+            Arr::only($data,['In_Between_Date','occupied_Seat','date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
             $offer_ride = $this->OfferRideRepository->create([
                 'user_id' =>Arr::get($data, 'user_id'),
                 'vechile_id'=>$data['vechile_id'],
@@ -44,7 +44,9 @@ class OfferRideService extends BaseService
                 'needs_desciption'=>$data['needs_desciption'],
                 'Accept_Offer'=>$data['Accept_Offer'],
                 'date_offer_ride'=>$data['date_offer_ride'],
-                'time_offer_ride'=>$data['time_offer_ride']
+                'time_offer_ride'=>$data['time_offer_ride'],
+                'Occupied_Seat'=>$data['occupied_Seat'],
+                'In_Between_Date'=>$data['In_Between_Date']
             ]);
             $offer_ride = $this->OfferRideRepository->with(['user','vechile'])->find($offer_ride->id);
            return $offer_ride;
@@ -59,7 +61,7 @@ class OfferRideService extends BaseService
      }
 
      public function updateofferRide(array $data,$id){
-        Arr::only($data,['date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
+        Arr::only($data,['In_Between_Date','occupied_Seat','date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
         $offer_ride = $this->OfferRideRepository->update([
             'user_id' =>Arr::get($data, 'user_id'),
             'vechile_id'=>$data['vechile_id'],
@@ -71,7 +73,9 @@ class OfferRideService extends BaseService
             'needs_desciption'=>$data['needs_desciption'],
             'Accept_Offer'=>$data['Accept_Offer'],
             'date_offer_ride'=>$data['date_offer_ride'],
-            'time_offer_ride'=>$data['time_offer_ride']
+            'time_offer_ride'=>$data['time_offer_ride'],
+            'Occupied_Seat'=>$data['occupied_Seat'],
+            'In_Between_Date'=>$data['In_Between_Date']
             ],$id);
 
         return $offer_ride;
