@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\UserModule\Http\Requests\ResetPasswordRequest;
 use Modules\UserModule\Http\Requests\OfferRideRequest;
+use Modules\UserModule\Http\Requests\searchOnRideOfferRequest;
 use Modules\UserModule\Http\Requests\UpdateCheckOfferRideRequest;
 use Modules\UserModule\Http\Requests\VechileRequest;
 use Modules\UserModule\Http\Resources\OfferRideServiceResource;
@@ -94,9 +95,20 @@ class OfferRideController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy(ResetPasswordRequest $request, $id)
+    public function destroy($id)
     {
         $offer_ride = $this->OfferRideService->deleteofferRide($id);
+        return response()->json([
+            "message"=>"data deleted successfully",
+            "status"=>"success",
+            "data"=>$offer_ride
+        ],200);
+    }
+
+    public function searchOnRideOffer(searchOnRideOfferRequest $request)
+    {
+
+        $offer_ride = $this->OfferRideService->searchOnRideOffer($request->validated());
         return response()->json([
             "message"=>"data deleted successfully",
             "status"=>"success",

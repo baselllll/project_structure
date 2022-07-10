@@ -28,6 +28,7 @@ Route::get('login/{provider}/callback', [\Modules\UserModule\Http\Controllers\So
     ->name('login.social.callback');
 Route::post('password/reset', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
 Route::middleware('auth:api')->prefix('users')->group(function () {
+    Route::get('search-ride',[\Modules\UserModule\Http\Controllers\OfferRideController::class,'searchOnRideOffer']);
     Route::prefix('driver')->group(function () {
        Route::apiResource('vechiles','VechileController');
        Route::apiResource('offer-ride','OfferRideController');
