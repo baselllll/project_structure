@@ -82,7 +82,7 @@ class OfferRideService extends BaseService
      }
      public  function  searchOnRideOffer(array $data){
          Arr::only($data,['location_from','location_to']);
-         $offer_ride = $this->OfferRideRepository
+         $offer_ride = $this->OfferRideRepository->with(['user','vechile'])
              ->Where('location_from', 'like', '%' .$data['location_from'] . '%')
              ->orWhere('location_to', 'like', '%' .$data['location_to'] . '%')
              ->paginate();
