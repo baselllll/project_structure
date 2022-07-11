@@ -29,6 +29,7 @@ class OfferRideServiceResource extends BaseResource
             "date_offer_ride" => $this->date_offer_ride,
             "time_offer_ride" => $this->time_offer_ride,
             "In_Between_Date" => $this->In_Between_Date,
+            "distance" => $this->distance,
         ];
     }
 }
