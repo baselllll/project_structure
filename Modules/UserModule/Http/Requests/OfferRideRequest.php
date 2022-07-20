@@ -32,7 +32,13 @@ class OfferRideRequest extends BaseRequest
             'Accept_Offer' => 'required',
             'date_offer_ride' => 'sometimes|date',
             'time_offer_rde' => 'sometimes|date_format:H:i',
-            'distance'=>"required|integer"
+            'price'=>"required|integer",
+            'requested_number'=>"",
+            'status'=>"sometimes|in:Cancelled,Requested,Accepted,Pending",
+            'message'=>"",
+            'distance'=>"required|integer",
+            'duration'=>"required|in:anytime,in_between_period,select_days",
+            'person_number'=>"required|integer",
         ];
     }
 

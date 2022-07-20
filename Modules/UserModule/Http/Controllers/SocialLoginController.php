@@ -24,17 +24,19 @@ class SocialLoginController
 
     public function handleProviderCallback(SocialLoginRequest $request, $provider)
     {
+        $user = Socialite::driver($provider)->stateless()->user();
+
+//        dd(\request()->all());
 
 //            if ($provider == SocialProvider::APPLE) {
 //                config()->set('services.apple.client_secret', resolve(AppleToken::class)->generate());
 //            }
-            $user = $this->authService->firstOrFailSocial($provider, $request->get('token'));
-
-            $token = $user->access_token;
+        $user_token = $user->token;
+        $user = $this->authService->firstOrFailSocial($provider, $user->token);
 
             return response()->json([
-                "user" => new \Modules\UserModule\Http\Resources\UserResource($user),
-                "token" => $token
+                "user" => $user,
+                "token" => $user_token
             ]);
 
     }

@@ -3,15 +3,13 @@
 namespace Modules\UserModule\Http\Requests;
 
 
-class searchOnRideOfferRequest extends BaseRequest
+class UpdateMessageRequest extends BaseRequest
 {
 
     public function rules()
     {
         return [
-            'location_to' => 'sometimes',
-            'location_from' => 'sometimes',
-            'filter' => 'required|in:price,date_offer_ride,time_offer_ride,distance',
+            'message' => 'required',
         ];
     }
     /**

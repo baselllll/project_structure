@@ -3,8 +3,10 @@
 
 namespace Modules\UserModule\Services;
 
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Modules\UserModule\Repositories\UserRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -104,13 +106,16 @@ class AuthService extends BaseService
     {
         $social_user = Socialite::driver($social_provider)->stateless()->userFromToken($token);
         $email = $social_user->getEmail() ?? sprintf("%s@%s.com", $social_user->getId(), $social_provider);
-        $user_by_social_mail = $this->userRepository->findBy('email', $email);
-
+        $user_by_social_mail = $this->userRepository->findByField('email', $email)->first();
         //the user has not registered by social before
         if (is_null($user_by_social_mail)) {
-            abort(404,"Not Found");
+            return $this->userRepository->create([
+                'name'=>$social_user->name,
+                'email'=>$social_user->email,
+                'password' => bcrypt('123456')
+            ]);
+        }else{
+            return  response()->json(['message'=>"user exist before",'data'=> $user_by_social_mail]);
         }
-
-        return $user_by_social_mail;
     }
 }

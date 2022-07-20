@@ -9,6 +9,8 @@ use Modules\UserModule\Http\Requests\ResetPasswordRequest;
 use Modules\UserModule\Http\Requests\OfferRideRequest;
 use Modules\UserModule\Http\Requests\searchOnRideOfferRequest;
 use Modules\UserModule\Http\Requests\UpdateCheckOfferRideRequest;
+use Modules\UserModule\Http\Requests\UpdateMessageRequest;
+use Modules\UserModule\Http\Requests\UpdateStatusRequest;
 use Modules\UserModule\Http\Requests\VechileRequest;
 use Modules\UserModule\Http\Resources\OfferRideServiceResource;
 use Modules\UserModule\Http\Resources\VechileResource;
@@ -110,7 +112,24 @@ class OfferRideController extends Controller
 
         $offer_ride = $this->OfferRideService->searchOnRideOffer($request->validated());
         return response()->json([
-            "message"=>"data deleted successfully",
+            "message"=>"data getting successfully",
+            "status"=>"success",
+            "data"=>$offer_ride
+        ],200);
+    }
+
+    public function updateStatusRideOffer(UpdateStatusRequest $request,$offer_ride_id){
+        $offer_ride = $this->OfferRideService->updateStatusRideOffer($offer_ride_id,$request->validated());
+        return response()->json([
+            "message"=>"data updated successfully",
+            "status"=>"success",
+            "data"=>$offer_ride
+        ],200);
+    }
+    public function  updateMessageOnRideOffer(UpdateMessageRequest $request,$offer_ride_id){
+        $offer_ride = $this->OfferRideService->updateMessageOnRideOffer($offer_ride_id,$request->validated());
+        return response()->json([
+            "message"=>"data updated successfully",
             "status"=>"success",
             "data"=>$offer_ride
         ],200);

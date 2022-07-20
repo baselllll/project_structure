@@ -20,15 +20,11 @@ Route::post('login-user',[UserLoginController::class,'loginUser']);
 Route::post('register-user',[UserLoginController::class,'registerUser']);
 Route::post('password/email', [\App\Http\Controllers\ForgotPasswordController::class,'forgot']);
 
-Route::get('login/{provider}', [\Modules\UserModule\Http\Controllers\SocialLoginController::class, 'redirectToProvider'])
-    ->where('provider', '(google|facebook|apple)')
-    ->name('login.social.redirect');
-Route::get('login/{provider}/callback', [\Modules\UserModule\Http\Controllers\SocialLoginController::class, 'handleProviderCallback'])
-    ->where('provider', '(google|facebook|apple)')
-    ->name('login.social.callback');
 Route::post('password/reset', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
 Route::middleware('auth:api')->prefix('users')->group(function () {
     Route::get('search-ride',[\Modules\UserModule\Http\Controllers\OfferRideController::class,'searchOnRideOffer']);
+    Route::post('update-status/{offer_ride_id}',[\Modules\UserModule\Http\Controllers\OfferRideController::class,'updateStatusRideOffer']);
+    Route::post('update-message/{offer_ride_id}',[\Modules\UserModule\Http\Controllers\OfferRideController::class,'updateMessageOnRideOffer']);
     Route::prefix('driver')->group(function () {
        Route::apiResource('vechiles','VechileController');
        Route::apiResource('offer-ride','OfferRideController');

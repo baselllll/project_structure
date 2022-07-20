@@ -32,7 +32,7 @@ class OfferRideService extends BaseService
     public function createofferRide(array $data)
     {
 
-            Arr::only($data,['distance','In_Between_Date','occupied_Seat','date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
+            Arr::only($data,['person_number','duration','price','requested_number','message','status','distance','In_Between_Date','occupied_Seat','date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
             $offer_ride = $this->OfferRideRepository->create([
                 'user_id' =>Arr::get($data, 'user_id'),
                 'vechile_id'=>$data['vechile_id'],
@@ -47,7 +47,13 @@ class OfferRideService extends BaseService
                 'time_offer_ride'=>$data['time_offer_ride'],
                 'Occupied_Seat'=>$data['occupied_Seat'],
                 'In_Between_Date'=>$data['In_Between_Date'],
-                'distance'=>$data['distance']
+                'distance'=>$data['distance'],
+                'price'=>$data['price'],
+                'requested_number'=>$data['requested_number'],
+                'message'=>$data['message'],
+                'status'=>$data['status'],
+                'duration'=>$data['duration'],
+                'person_number'=>$data['person_number'],
             ]);
             $offer_ride = $this->OfferRideRepository->with(['user','vechile'])->find($offer_ride->id);
            return $offer_ride;
@@ -62,7 +68,7 @@ class OfferRideService extends BaseService
      }
 
      public function updateofferRide(array $data,$id){
-        Arr::only($data,['distance','In_Between_Date','occupied_Seat','date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
+        Arr::only($data,['person_number','duration','price','requested_number','message','status','distance','In_Between_Date','occupied_Seat','date_offer_ride','time_offer_ride','user_id','vechile_id','location_from','location_to','WhenToGo','offering_seats','Max_Speed','occupied_Seat','needs_desciption','Accept_Offer']);
         $offer_ride = $this->OfferRideRepository->update([
             'user_id' =>Arr::get($data, 'user_id'),
             'vechile_id'=>$data['vechile_id'],
@@ -77,17 +83,50 @@ class OfferRideService extends BaseService
             'time_offer_ride'=>$data['time_offer_ride'],
             'Occupied_Seat'=>$data['occupied_Seat'],
             'In_Between_Date'=>$data['In_Between_Date'],
-            'distance'=>$data['distance']
+            'distance'=>$data['distance'],
+            'price'=>$data['price'],
+            'requested_number'=>$data['requested_number'],
+            'message'=>$data['message'],
+            'status'=>$data['status'],
+            'duration'=>$data['duration'],
+            'person_number'=>$data['person_number'],
             ],$id);
 
         return $offer_ride;
      }
      public  function  searchOnRideOffer(array $data){
-         Arr::only($data,['location_from','location_to']);
+         Arr::only($data,['location_from','location_to','filter']);
          $offer_ride = $this->OfferRideRepository->with(['user','vechile'])
              ->Where('location_from', 'like', '%' .$data['location_from'] . '%')
              ->orWhere('location_to', 'like', '%' .$data['location_to'] . '%')
-             ->paginate();
+             ->orderBy($data['filter'], 'DESC')
+             ->paginate(5);
+         return $offer_ride;
+     }
+     public function updateStatusRideOffer($offer_ride_id,array $data){
+         Arr::only($data,['status']);
+         if($data['status']=="Requested"){
+             $requested_number = $this->OfferRideRepository->findByField('id',$offer_ride_id)->first()->requested_number;
+             $offer_ride_requested = $this->OfferRideRepository->with(['user','vechile'])->
+             update([
+                 'requested_number'=> ++$requested_number,
+                 'status'=>$data['status']
+             ],$offer_ride_id);
+             $offer_ride_requested->save();
+             return $offer_ride_requested;
+         }
+         $offer_ride = $this->OfferRideRepository->with(['user','vechile'])->
+             update([
+                'status'=>$data['status']
+         ],$offer_ride_id);
+         return $offer_ride;
+     }
+     public function updateMessageOnRideOffer($offer_ride_id,array $data){
+         Arr::only($data,['message']);
+         $offer_ride = $this->OfferRideRepository->with(['user','vechile'])->
+         update([
+             'message'=>$data['message']
+         ],$offer_ride_id);
          return $offer_ride;
      }
 }
