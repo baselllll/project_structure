@@ -23,3 +23,14 @@ Route::get('auth/{provider}/callback', [\Modules\UserModule\Http\Controllers\Soc
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('sendmessage', [\App\Http\Controllers\ChatController::class, 'sendMessage']);
+Route::get('view_chat', function (){
+    return view('send_message');
+});
+
+Route::get('get_data',function (){
+
+    $d = \Illuminate\Support\Facades\Redis::keys('*');
+    dd($d);
+});

@@ -84,4 +84,10 @@ class User extends Authenticatable implements JWTSubject,HasMedia
     public function offer_ride(){
         return $this->hasOne(OfferRide::class,'user_id');
     }
+    public  function  message_sender(){
+        return $this->hasOne(Messages::class,'sender_id');
+    }
+    public  function  message_reciver(){
+        return $this->hasOne(Messages::class,'receiver_id');
+    }
 }
